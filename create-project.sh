@@ -4,6 +4,70 @@ cd "$(dirname "$0")"
 
 set -e
 
+# Check Node.js version
+NODE_REQUIRED=20
+NODE_VERSION=""
+
+# Function to check if nvm is available
+has_nvm() {
+  [ -n "$NVM_DIR" ] && [ -s "$NVM_DIR/nvm.sh" ]
+}
+
+# Function to check Node.js version
+check_node_version() {
+  if command -v node &> /dev/null; then
+    NODE_VERSION=$(node -v | cut -d'v' -f2)
+    NODE_MAJOR_VERSION=$(echo $NODE_VERSION | cut -d'.' -f1)
+    [ "$NODE_MAJOR_VERSION" -ge "$NODE_REQUIRED" ]
+    return $?
+  fi
+  return 1
+}
+
+# Check if we already have a suitable Node.js version
+if check_node_version; then
+  echo "✓ Using Node.js $NODE_VERSION"
+else
+  # Node.js is either not installed or version is too old
+  if has_nvm; then
+    echo "⚠️  Node.js $NODE_REQUIRED+ is required (found $NODE_VERSION)."
+    echo "🔍 nvm is detected. We can help you switch to Node.js $NODE_REQUIRED."
+    
+    # Load nvm
+    . "$NVM_DIR/nvm.sh"
+    
+    # Check if Node.js 20 is already installed via nvm
+    if nvm ls $NODE_REQUIRED &> /dev/null; then
+      echo "✓ Found Node.js $NODE_REQUIRED in nvm"
+      nvm use $NODE_REQUIRED
+      echo "✓ Switched to Node.js $NODE_REQUIRED"
+    else
+      echo "🔧 Node.js $NODE_REQUIRED is not installed via nvm. Would you like to install it? (y/n)"
+      read -p "→ " INSTALL_NODE
+      if [[ $INSTALL_NODE =~ ^[Yy]$ ]]; then
+        echo "⏳ Installing Node.js $NODE_REQUIRED via nvm (this may take a few minutes)..."
+        nvm install $NODE_REQUIRED
+        nvm use $NODE_REQUIRED
+        echo "✓ Node.js $NODE_REQUIRED installed and activated"
+      else
+        echo "❌ Node.js $NODE_REQUIRED+ is required. Please install it manually."
+        exit 1
+      fi
+    fi
+  else
+    # No nvm, show manual installation instructions
+    if [ -z "$NODE_VERSION" ]; then
+      echo "❌ Node.js is not installed."
+    else
+      echo "❌ Node.js version $NODE_VERSION is not supported."
+    fi
+    echo "Please install Node.js version $NODE_REQUIRED or higher, or install nvm to manage Node.js versions."
+    echo "- Download Node.js: https://nodejs.org/"
+    echo "- Install nvm: https://github.com/nvm-sh/nvm#installing-and-updating"
+    exit 1
+  fi
+fi
+
 echo "📁 Project name:"
 read PROJECT_NAME
 
