@@ -235,5 +235,44 @@ esac
 git init
 echo "✅ Dépôt Git initialisé (pas de commit auto)"
 
-echo "🎉 Projet $PROJECT_NAME prêt à être codé !"
+# Demander si on ouvre l'éditeur
+echo -e "\n🛠️  Ouvrir le projet dans un éditeur ?"
+echo "1) VS Code"
+echo "2) Windsurf"
+echo "3) Non merci"
+
+while true; do
+  read -p "→ Ton choix [1-3] : " editor_choice
+  
+  case $editor_choice in
+    1)
+      if command -v code &> /dev/null; then
+        code .
+        echo "✅ Projet ouvert dans VS Code"
+      else
+        echo "❌ VS Code n'est pas installé ou n'est pas dans le PATH"
+      fi
+      break
+      ;;
+    2)
+      if command -v windsurf &> /dev/null; then
+        windsurf .
+        echo "✅ Projet ouvert dans Windsurf"
+      else
+        echo "❌ Windsurf n'est pas installé ou n'est pas dans le PATH"
+      fi
+      break
+      ;;
+    3)
+      echo "✅ Très bien, tu peux l'ouvrir plus tard avec :"
+      echo "   cd $(pwd)"
+      break
+      ;;
+    *) 
+      echo -e "❌ Option invalide. Réessaie.\n"
+      ;;
+  esac
+done
+
+echo -e "\n🎉 Projet $PROJECT_NAME prêt à être codé !"
 
