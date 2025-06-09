@@ -7,24 +7,25 @@ set -e
 echo "📁 Nom du projet :"
 read PROJECT_NAME
 
-# Choix du gestionnaire de paquets
-echo "📦 Choisis ton gestionnaire de paquets :"
-echo "1) npm (par défaut)"
-echo "2) yarn"
-echo "3) pnpm"
-read -p "Ton choix [1] : " PM_CHOICE
+# Afficher le menu de sélection
+echo -e "\n📦 Choisis ton gestionnaire de paquets :"
 
-case $PM_CHOICE in
-  "2")
-    PACKAGE_MANAGER="yarn"
-    ;;
-  "3")
-    PACKAGE_MANAGER="pnpm"
-    ;;
-  *)
-    PACKAGE_MANAGER="npm"
-    ;;
-esac
+echo "1) npm - Gestionnaire standard de Node.js (recommandé)"
+echo "2) yarn - Gestionnaire rapide et fiable"
+echo "3) pnpm - Gestionnaire rapide et économe en espace"
+
+while true; do
+  read -p "→ Ton choix [1-3] : " choice
+  
+  case $choice in
+    1) PACKAGE_MANAGER="npm"; break ;;
+    2) PACKAGE_MANAGER="yarn"; break ;;
+    3) PACKAGE_MANAGER="pnpm"; break ;;
+    *) echo -e "❌ Option invalide. Réessaie.\n" ;;
+  esac
+done
+
+echo -e "\n✅ Gestionnaire sélectionné : $PACKAGE_MANAGER\n"
 
 if ! command -v $PACKAGE_MANAGER &> /dev/null; then
   echo "❌ $PACKAGE_MANAGER n'est pas installé. Veux-tu l'installer ? (o/n)"
