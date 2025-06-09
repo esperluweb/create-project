@@ -1,6 +1,6 @@
 # create-project.sh
 
-Un script Bash interactif pour générer rapidement une structure de projet web moderne (HTML/CSS, React, Next.js) avec le gestionnaire de paquets de ton choix (npm, yarn, pnpm).
+Un script Bash interactif pour générer rapidement une structure de projet web moderne (HTML/CSS, React, Next.js, Astro) avec le gestionnaire de paquets de ton choix (npm, yarn, pnpm).
 
 ## Fonctionnalités
 - Choix du gestionnaire de paquets (npm, yarn, pnpm)
@@ -9,6 +9,7 @@ Un script Bash interactif pour générer rapidement une structure de projet web 
   - **HTML/CSS** : structure minimale avec un fichier `index.html`
   - **React** (via Vite) : structure moderne, option single page ou multipages (avec react-router-dom)
   - **Next.js** : structure Next.js prête à l’emploi
+  - **Astro** : site statique moderne optimisé avec Astro
 - Structure de dossiers adaptée au type de projet
 
 ## Utilisation

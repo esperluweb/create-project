@@ -8,8 +8,23 @@ echo "📁 Nom du projet :"
 read PROJECT_NAME
 
 # Choix du gestionnaire de paquets
-echo "📦 Choisis ton gestionnaire de paquets (npm / yarn / pnpm) :"
-read PACKAGE_MANAGER
+echo "📦 Choisis ton gestionnaire de paquets :"
+echo "1) npm (par défaut)"
+echo "2) yarn"
+echo "3) pnpm"
+read -p "Ton choix [1] : " PM_CHOICE
+
+case $PM_CHOICE in
+  "2")
+    PACKAGE_MANAGER="yarn"
+    ;;
+  "3")
+    PACKAGE_MANAGER="pnpm"
+    ;;
+  *)
+    PACKAGE_MANAGER="npm"
+    ;;
+esac
 
 if ! command -v $PACKAGE_MANAGER &> /dev/null; then
   echo "❌ $PACKAGE_MANAGER n'est pas installé. Veux-tu l'installer ? (o/n)"
@@ -34,17 +49,22 @@ if ! command -v $PACKAGE_MANAGER &> /dev/null; then
 fi
 
 # Type de projet
-echo "🌐 Type de projet : (1) HTML/CSS (2) React (3) Next.js)"
-read PROJECT_TYPE
+echo "🌐 Type de projet :"
+echo "1) HTML/CSS"
+echo "2) React"
+echo "3) Next.js"
+echo "4) Astro"
+read -p "Ton choix : " PROJECT_TYPE
 
-if [ "$PROJECT_TYPE" == "1" ]; then
-  mkdir "$PROJECT_NAME"
-  cd "$PROJECT_NAME"
-  mkdir src
-  echo "<!DOCTYPE html><html><head><title>$PROJECT_NAME</title></head><body><h1>Hello $PROJECT_NAME</h1></body></html>" > src/index.html
-  echo "🧱 Projet HTML/CSS créé."
-
-elif [ "$PROJECT_TYPE" == "2" ]; then
+case $PROJECT_TYPE in
+  "1")
+    mkdir "$PROJECT_NAME"
+    cd "$PROJECT_NAME"
+    mkdir src
+    echo "<!DOCTYPE html><html><head><title>$PROJECT_NAME</title></head><body><h1>Hello $PROJECT_NAME</h1></body></html>" > src/index.html
+    echo "🧱 Projet HTML/CSS créé."
+    ;;
+  "2")
   npm create vite@latest "$PROJECT_NAME" -- --template react
   cd "$PROJECT_NAME"
   echo "⚛️ Projet React avec Vite créé."
@@ -91,15 +111,22 @@ export default router;
 EOF
   fi
 
-elif [ "$PROJECT_TYPE" == "3" ]; then
-  npx create-next-app "$PROJECT_NAME"
-  cd "$PROJECT_NAME"
-  echo "⚙️ Projet Next.js créé."
-
-else
-  echo "❌ Choix invalide"
-  exit 1
-fi
+  ;;
+  "3")
+    npx create-next-app@latest "$PROJECT_NAME" --typescript --eslint --tailwind --app --src-dir --import-alias "@/*"
+    cd "$PROJECT_NAME"
+    echo "⚡ Projet Next.js créé avec TypeScript, ESLint, Tailwind CSS et le dossier app."
+    ;;
+  "4")
+    npm create astro@latest "$PROJECT_NAME"
+    cd "$PROJECT_NAME"
+    echo "🚀 Projet Astro créé."
+    ;;
+  *)
+    echo "❌ Option non valide"
+    exit 1
+    ;;
+esac
 
 # Description + Auteur
 echo "📝 Petite description du projet :"
@@ -158,15 +185,45 @@ MIT License
 
 Copyright (c) $YEAR $AUTHOR
 
-Permission is hereby granted, free of charge, to any person obtaining a copy...
-[à compléter avec le texte complet si besoin]
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 EOF
     ;;
   2)
-    echo "Apache 2.0 - Placeholder" > LICENSE
+    echo "Copyright (c) $YEAR $AUTHOR
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License." > LICENSE
     ;;
   3)
-    echo "GPL v3 - Placeholder" > LICENSE
+    cat > LICENSE <<EOF
+Copyright (c) $YEAR $AUTHOR
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+EOF
     ;;
   *)
     echo "Pas de licence ajoutée."
