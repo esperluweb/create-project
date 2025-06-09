@@ -1,8 +1,50 @@
-# create-project.sh
+<div align="center">
 
-Un script Bash interactif pour générer rapidement une structure de projet web moderne (HTML/CSS, React, Next.js, Astro) avec le gestionnaire de paquets de ton choix (npm, yarn, pnpm).
+# 🚀 create-project.sh
 
-## Fonctionnalités
+[![English](https://img.shields.io/badge/English-🇬🇧-blue)](README.md) 
+[![Français](https://img.shields.io/badge/Français-🇫🇷-blue)](README.md#français-french)
+
+</div>
+
+## 🇬🇧 English
+
+### 🛠️ Features
+- Choose your package manager (npm, yarn, pnpm)
+- Automatic package manager installation if needed
+- Project creation:
+  - **HTML/CSS**: Minimal structure with an `index.html` file
+  - **React** (via Vite): Modern structure, single page or multi-page option (with react-router-dom)
+  - **Next.js**: Ready-to-use Next.js structure
+  - **Astro**: Modern static site optimized with Astro
+- Folder structure adapted to project type
+
+### 🚀 Usage
+```bash
+./create-project.sh
+```
+
+Answer the questions to configure your project.
+
+### 📋 Prerequisites
+- Bash
+- Node.js
+- A package manager (npm, yarn, or pnpm)
+
+### 📜 License
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+### 👥 Contributing
+Contributions are welcome! To propose an improvement or fix a bug, please submit a Pull Request (PR).
+
+### ✨ Author
+Created by EsperluWeb. Please credit the author if you use or fork this project!
+
+---
+
+## 🇫🇷 Français
+
+### 🛠️ Fonctionnalités
 - Choix du gestionnaire de paquets (npm, yarn, pnpm)
 - Installation automatique du gestionnaire si besoin
 - Création de projets :
@@ -12,23 +54,23 @@ Un script Bash interactif pour générer rapidement une structure de projet web 
   - **Astro** : site statique moderne optimisé avec Astro
 - Structure de dossiers adaptée au type de projet
 
-## Utilisation
+### 🚀 Utilisation
 ```bash
 ./create-project.sh
 ```
 
 Réponds aux questions pour configurer ton projet.
 
-## Prérequis
+### 📋 Prérequis
 - Bash
 - Node.js
 - Un gestionnaire de paquets (npm, yarn ou pnpm)
 
-## Licence
+### 📜 Licence
 Ce projet est distribué sous licence MIT (voir [LICENSE](./LICENSE)).
 
-## Contribuer
+### 👥 Contribuer
 Les contributions sont les bienvenues ! Pour proposer une amélioration ou corriger un bug, merci de faire une Pull Request (PR).
 
-## Auteur
+### ✨ Auteur
 Créé par EsperluWeb. Merci de créditer l’auteur en cas d’utilisation ou de fork !
